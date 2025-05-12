@@ -14,6 +14,9 @@ struct SongDetailView: View {
         VStack(spacing: 20) {
             List{
                 Text(Song.eminemSongs[0].artist)
+                    .font(.largeTitle)
+                    .bold()
+                   
             }
             Image(song.albumCoverName)
                 .resizable()
@@ -24,10 +27,6 @@ struct SongDetailView: View {
             Text(song.title)
                 .font(.title)
                 .fontWeight(.bold)
-
-            Text("Singer: \(song.artist)")
-                .font(.subheadline)
-                .foregroundColor(.gray)
 
             Text("Description: \(song.description)")
                 .font(.body)

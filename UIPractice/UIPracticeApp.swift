@@ -11,7 +11,8 @@ import SwiftUI
 struct UIPracticeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ArtistDetailView(artist: Artist.allArtists[0])
+            MainTabView()
         }
     }
 }

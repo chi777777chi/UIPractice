@@ -1,26 +1,41 @@
+//
+//  SongListView.swift
+//  UIPractice
+//
+//  Created by 陳泓齊 on 2025/5/12.
+//
+
+
 import SwiftUI
 
 struct SongListView: View {
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+
     var body: some View {
         NavigationStack {
-            List(Artist.allArtists.flatMap { $0.albums.flatMap { $0.songs } }) { song in
-                NavigationLink(destination: SongDetailView(song: song)) {
-                    HStack {
-                        Image(song.albumCoverName)
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .cornerRadius(8)
-                        VStack(alignment: .leading) {
-                            Text(song.title)
-                                .font(.headline)
-                            Text(song.artist)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 16) {
+                    ForEach(Artist.allArtists.flatMap { $0.albums.flatMap { $0.songs } }) { song in
+                        NavigationLink(destination: SongDetailView(song: song)) {
+                            VStack {
+                                Image(song.albumCoverName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 120)
+                                    .cornerRadius(10)
+                                Text(song.title)
+                                    .font(.headline)
+                                    .multilineTextAlignment(.center)
+                                Text(song.artist)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                            }
+                            .padding()
                         }
-                        .padding(.leading, 8)
                     }
-                    .padding(.vertical, 8)
                 }
+                .padding()
             }
             .navigationTitle("Songs")
         }

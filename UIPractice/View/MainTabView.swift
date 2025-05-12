@@ -1,3 +1,11 @@
+//
+//  MainTabView.swift
+//  UIPractice
+//
+//  Created by 陳泓齊 on 2025/5/12.
+//
+
+
 import SwiftUI
 
 struct MainTabView: View {
@@ -8,14 +16,14 @@ struct MainTabView: View {
                     Label("Artists", systemImage: "person.3.fill")
                 }
 
-            Text("Albums")
+            AlbumListView()
                 .tabItem {
                     Label("Albums", systemImage: "rectangle.stack.fill")
                 }
 
-            Text("Gallery")
+            SongListView()
                 .tabItem {
-                    Label("Gallery", systemImage: "photo.fill")
+                    Label("Songs", systemImage: "music.note.list")
                 }
         }
     }

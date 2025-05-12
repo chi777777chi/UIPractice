@@ -8,25 +8,27 @@
 import SwiftUI
 
 struct ArtistDetailView: View {
+    let artist: Artist
     var body: some View {
         ZStack {
             Color.gray
                 .ignoresSafeArea()
 
             VStack {
-                Text("Eminem")
+                Text(artist.name)
                     .font(.largeTitle)
                     .bold()
                 ScrollView {
                     HStack {
-                        Image("Eminem")
+                        Image(artist.imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 200, height: 200)
                             .clipShape(Circle())
-                        EminemIntroduction
+                        Text(artist.bio)
+                            .font(.headline)
                     }
-                    IntroductionView()
+                    IntroductionView(artist: artist)
                 }
                 .font(.title)
                 .bold()
@@ -36,48 +38,44 @@ struct ArtistDetailView: View {
     }
 }
 
-var EminemIntroduction: some View {
-    Text("Eminem is a rapper, songwriter, and record producer. He is known for his rapid-fire delivery and controversial lyrics.")
-        .font(.headline)
-        
-        
-}
-
-#Preview {
-    ArtistDetailView()
-}
 
 struct IntroductionView: View {
+    let artist: Artist
     var body: some View {
         ScrollView(.vertical) {
-            EminemAlbum()
-            EminemPictureView()
+            ArtistAlbumView(albums: artist.albums)
+//            ArtistPictureView(artist: artist)
         }
     }
 }
 
-struct EminemAlbum: View {
+struct ArtistAlbumView: View {
+    let albums: [Album]
     var body: some View {
         HStack{
-            Text("Eminem's Albums")
+            Text("\(albums[0].artist)'s Albums")
             Image(systemName: "music.note")
         }
         ScrollView(.horizontal) {
             HStack {
-                Image("Premonition")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                Image("images")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                ForEach(albums, id: \.id) { album in
+                    NavigationLink(destination: AlbumDetailView(album: album)) {
+                        Image(album.albumCoverName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 180, height: 180)
+                            .cornerRadius(10)
+                    }
+                }
             }
         }
     }
 }
-struct EminemPictureView: View {
+struct ArtistPictureView: View {
+    let artist: Artist
     var body: some View {
         HStack{
-            Text("Eminem's Pictures")
+            Text("\(artist.name)'s Pictures")
             Image(systemName: "photo")
             
         }
@@ -86,11 +84,19 @@ struct EminemPictureView: View {
                 Image("Proof-eminem")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .frame(width: 180, height: 180)
+                    .cornerRadius(10)
                 Image("Lose_Yourself")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .frame(width: 180, height: 180)
+                    .cornerRadius(10)
             }
         }
     }
 }
 
+
+#Preview {
+    ArtistDetailView(artist: Artist.allArtists[1])
+}
